@@ -18,6 +18,7 @@ const writer_factory = (file:string): Writer => {
 }
 
 const do_work = (file: string) => {
+  
   let query = readFileSync(file);
   let formatted = formatter(query.toString(), {
     sql:  'default',
@@ -25,9 +26,9 @@ const do_work = (file: string) => {
     upper: program.upper,
     allowCamelcase:  false,
   });
-  // TODO: Would be nice if the FileWriter actually output just the file names of what it changed. 
   let writer = writer_factory(file)
   writer.write(formatted)
+  
 }
 
 if(program.file){
