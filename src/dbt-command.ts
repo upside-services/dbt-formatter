@@ -33,7 +33,7 @@ const do_work = (file: string) => {
 if(program.file){
   do_work(program.file);
 }else if (program.directory){
-  let all_files = glob.sync(program.directory + '/**/*.sql')
+  let all_files = glob.sync(`${program.directory}/**/*.sql`)
   all_files.forEach(do_work)
 }
 
