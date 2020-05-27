@@ -8,7 +8,8 @@ import { writer } from 'repl';
 program
   .option('-f, --file <file>', 'sql file to format')
   .option('-d, --directory <directory>', 'The directory to recursively search.')
-  .option('-i', '--indent <spaces>', 'number of spaces for indent. Defaults to 4.')
+  .option('-i, --ignore <pattern>', 'Glob friendly pattern(s) of files to ignore in directory', (pattern, previous) => previous.concat([pattern]), [])
+  .option('-s', '--spaces <spaces>', 'number of spaces for indent. Defaults to 4.')
   .option('--upper', 'upercase reserved sql words')
   .option('--replace', 'overwrites the linted file(s).')
   .parse(process.argv);
@@ -34,7 +35,8 @@ const do_work = (file: string) => {
 if(program.file){
   do_work(program.file);
 }else if (program.directory){
-  let all_files = glob.sync(`${program.directory}/**/*.sql`)
+  let match = `${program.directory}/**/*.sql`
+  let all_files = program.ignore == undefined? glob.sync(match): glob.sync(match, {ignore: program.ignore});
   all_files.forEach(do_work)
 }
 
