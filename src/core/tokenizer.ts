@@ -202,7 +202,7 @@ export default class Tokenizer {
       8: {
         input,
         type: tokenTypes.BLOCK_COMMENT,
-        regex: /^(\/\*[^]*?(?:\*\/|$))/,
+        regex: /^(\/\*[^]*?(?:\*\/|$))|^({#[^]*#}$)/,
       },
       9: {
         input,
